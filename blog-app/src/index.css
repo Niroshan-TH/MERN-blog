@@ -1,9 +1,17 @@
 /* src/index.css */
 
 /* Tailwind Directives */
-@tailwind base;
+/*@tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities;*/
 @import "tailwindcss";
+@import "flowbite";
+/*@plugin "flowbite-react/plugin/tailwindcss";
+@source "../.flowbite-react/class-list.json";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";*/
+
+
 
 
