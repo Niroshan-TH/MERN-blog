@@ -23,7 +23,6 @@ export default function FooterCom() {
                         <FooterLinkGroup col>
                             <FooterLink>yei yei yei </FooterLink>
                             <FooterLink>yei yei yei </FooterLink>
-                            <FooterLink>yei yei yei </FooterLink>
 
                         </FooterLinkGroup>
                     </div>
