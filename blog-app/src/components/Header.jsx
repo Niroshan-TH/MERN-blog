@@ -1,5 +1,10 @@
 import {
+  Avatar,
     Button,
+    Dropdown,
+    DropdownItem,
+    DropdownDivider,
+    DropdownHeader,
     Navbar,
     NavbarBrand,
     NavbarCollapse,
@@ -11,10 +16,14 @@ import React from 'react'
 import { Link, useLocation} from 'react-router-dom'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { FaMoon } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
 
 
 export default function Header() {
     const path= useLocation().pathname;
+    const {currentUser}=useSelector(state=>state.user)
+    console.log(currentUser);
+    const profilePic = currentUser?.profilePicture || "https://media.istockphoto.com/id/526947869/vector/man-silhouette-profile-picture.jpg?s=612x612&w=0&k=20&c=5I7Vgx_U6UPJe9U2sA2_8JFF4grkP7bNmDnsLXTYlSc=";
   return (
     <Navbar className="border-b-2 ">
       <Link to="/" className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white">
@@ -38,11 +47,37 @@ export default function Header() {
         <Button className='w-12 h-10   sm:inline' color='gray' pill>
             <FaMoon/>
         </Button>
-        <Link to='/sign-in'>
+        {currentUser ? (
+            <Dropdown
+              arrowIcon={false}
+              inline
+              label={
+                <Avatar
+                  alt='user'
+                  img = {currentUser.profilePicture}
+                  rounded
+                />
+              }>
+                <DropdownHeader>
+                  <span className='block text-sm '>@{currentUser.username}</span>
+                  <span className='block font-extrabold'>@{currentUser.email}</span>
+                </DropdownHeader>
+                <DropdownItem as={Link} to="/dashboard?tab=profile">
+                  Profile
+                </DropdownItem>
+                <DropdownDivider />
+                <DropdownItem>
+                  Sign out
+                </DropdownItem>
+            </Dropdown>
+        ) : (
+          <Link to='/sign-in'>
             <Button className="bg-gradient-to-br from-purple-600 to-blue-500 text-white" outline>
                 Sign In
             </Button>
-        </Link>
+          </Link>
+         )}
+        
         <NavbarToggle/>
       </div>
         <NavbarCollapse>
