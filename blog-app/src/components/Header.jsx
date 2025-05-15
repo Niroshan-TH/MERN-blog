@@ -15,14 +15,19 @@ import {
 import React from 'react'
 import { Link, useLocation} from 'react-router-dom'
 import { AiOutlineSearch } from 'react-icons/ai'
-import { FaMoon } from 'react-icons/fa'
-import { useSelector } from 'react-redux'
-
+import { FaMoon , FaSun} from 'react-icons/fa'
+import { useSelector,useDispatch } from 'react-redux'
+import { toggleTheme } from '../redux/theme/themeslice'
 
 export default function Header() {
     const path= useLocation().pathname;
+    const dispatch = useDispatch();
     const {currentUser}=useSelector(state=>state.user)
+    const currentTheme =useSelector((state)=>state.theme.theme)
     console.log(currentUser);
+    const authRoutes = ['/sign-in', '/sign-up'];
+    const isAuthPage = authRoutes.includes(path);
+
     const profilePic = currentUser?.profilePicture || "https://media.istockphoto.com/id/526947869/vector/man-silhouette-profile-picture.jpg?s=612x612&w=0&k=20&c=5I7Vgx_U6UPJe9U2sA2_8JFF4grkP7bNmDnsLXTYlSc=";
   return (
     <Navbar className="border-b-2 ">
@@ -44,10 +49,12 @@ export default function Header() {
         <AiOutlineSearch />
       </Button>
       <div className='flex gap-2 md:order-2'>
-        <Button className='w-12 h-10   sm:inline' color='gray' pill>
-            <FaMoon/>
+        <Button className='w-12 h-10   sm:inline' color='gray' pill onClick={()=>dispatch(toggleTheme())}>
+            {currentTheme==='light'?<FaSun/> : <FaMoon/>}
+            
         </Button>
-        {currentUser ? (
+
+        {! isAuthPage && currentUser ? (
             <Dropdown
               arrowIcon={false}
               inline
